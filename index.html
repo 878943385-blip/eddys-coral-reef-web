@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="0By6XCLcwlgPCNygJrVCcd">
+<head data-page-node-id="5AB9poKODRO3lBhyjxcbzg">
+<meta charset="UTF-8" data-page-node-id="y8FdLFo9GcTKIUWI4iFs2x">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="MXDCpmrI4cYR592F6PAggC">
+<title>满月产卵夜 · 珊瑚的一生中最重要的一晚</title>
+<style>
+  :root{
+    --deep-1:#020d18;
+    --deep-2:#04182b;
+    --deep-3:#062a45;
+    --ink:#dff1fb;
+    --ink-dim:#8fb4c9;
+    --moon:#f4ecd8;
+    --egg-pink:#ffc9dd;
+    --coral:#ff8b7e;
+    --coral-2:#ffb46b;
+    --algae:#3ddad7;
+    --card-bg:rgba(9,32,52,.72);
+    --card-border:rgba(120,190,230,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:linear-gradient(180deg,var(--deep-1) 0%,var(--deep-2) 40%,var(--deep-3) 75%,var(--deep-1) 100%);
+    color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+    overflow-x:hidden;
+    line-height:1.7;
+  }
+  /* ===== 背景浮游微粒画布 ===== */
+  #plankton{
+    position:fixed;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+  }
+  main{position:relative;z-index:1}
+
+  /* ===== 通用屏幕 ===== */
+  .screen{
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:8vh 6vw;
+    position:relative;
+    overflow:hidden;
+  }
+  .kicker{
+    font-size:.85rem;letter-spacing:.4em;color:var(--ink-dim);
+    text-transform:uppercase;margin-bottom:1.2rem;
+  }
+  h1{
+    font-size:clamp(2.2rem,6.5vw,4.4rem);
+    font-weight:800;letter-spacing:.06em;
+    text-align:center;line-height:1.25;
+    background:linear-gradient(120deg,var(--moon) 30%,#ffd9a8 60%,var(--egg-pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(244,236,216,.12);
+  }
+  h2{
+    font-size:clamp(1.5rem,3.8vw,2.4rem);
+    font-weight:700;text-align:center;margin-bottom:.6em;letter-spacing:.04em;
+  }
+  .sub{color:var(--ink-dim);text-align:center;max-width:640px;font-size:clamp(.95rem,2vw,1.1rem)}
+  .highlight{color:var(--coral-2);font-weight:700}
+  .pink{color:var(--egg-pink);font-weight:700}
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    color:var(--ink-dim);font-size:.8rem;letter-spacing:.3em;
+    animation:bob 2.2s ease-in-out infinite;white-space:nowrap;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+
+  /* 滚动渐入 */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ===== 第1屏 Hero ===== */
+  #s1 .moonlight{
+    position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+    width:min(60vw,520px);height:120vh;
+    background:linear-gradient(180deg,rgba(244,236,216,.14),rgba(244,236,216,0) 70%);
+    clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);
+    pointer-events:none;filter:blur(6px);
+    transition:transform .3s ease;
+  }
+  #s1 .moon{
+    position:absolute;top:7vh;left:50%;transform:translateX(-50%);
+    width:clamp(60px,9vw,96px);height:clamp(60px,9vw,96px);border-radius:50%;
+    background:radial-gradient(circle at 38% 35%,#fffdf4,var(--moon) 60%,#d8c9a3);
+    box-shadow:0 0 40px rgba(244,236,216,.55),0 0 140px rgba(244,236,216,.25);
+    pointer-events:none;
+  }
+  #s1{padding-top:22vh}
+  #s1 .sub{margin-top:1.4rem}
+  .fact-chip{
+    margin-top:2rem;display:inline-block;
+    background:var(--card-bg);border:1px solid var(--card-border);
+    border-radius:999px;padding:.55em 1.4em;font-size:.9rem;color:var(--ink-dim);
+  }
+  .fact-chip b{color:var(--egg-pink)}
+
+  /* ===== 第2屏 昼夜滑杆 ===== */
+  .scene-wrap{
+    position:relative;width:min(860px,92vw);aspect-ratio:16/8.5;
+    border-radius:22px;overflow:hidden;margin-top:2.2rem;
+    border:1px solid var(--card-border);
+    box-shadow:0 24px 70px rgba(0,0,0,.5);
+  }
+  .scene{position:absolute;inset:0;transition:opacity .1s linear}
+  .scene svg{width:100%;height:100%;display:block}
+  #dayScene{opacity:1}
+  #nightScene{opacity:0}
+  .day-night-ctrl{
+    margin-top:1.6rem;width:min(560px,88vw);
+    display:flex;align-items:center;gap:1rem;color:var(--ink-dim);font-size:.85rem;
+  }
+  .day-night-ctrl input[type=range]{flex:1;accent-color:var(--coral-2)}
+  .caption{margin-top:1.4rem;color:var(--ink-dim);text-align:center;max-width:620px;font-size:.95rem}
+
+  /* ===== 第3屏 信号卡 ===== */
+  .signals{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
+    width:min(980px,94vw);margin-top:2.2rem;
+  }
+  .signal-card{
+    background:var(--card-bg);border:1px solid var(--card-border);
+    border-radius:20px;padding:1.6rem 1.3rem;cursor:pointer;
+    transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
+    text-align:center;user-select:none;
+  }
+  .signal-card:hover{transform:translateY(-6px)}
+  .signal-card.active{
+    border-color:rgba(255,180,107,.75);
+    box-shadow:0 0 0 1px rgba(255,180,107,.4),0 0 34px rgba(255,180,107,.18);
+  }
+  .signal-card .icon{font-size:2.2rem;display:block;margin-bottom:.6rem}
+  .signal-card h3{font-size:1.05rem;margin-bottom:.5rem;letter-spacing:.05em}
+  .signal-card p{font-size:.85rem;color:var(--ink-dim);min-height:3.2em}
+  .signal-card.active p{color:var(--ink)}
+  .badge{
+    display:inline-block;margin-top:.7rem;font-size:.72rem;letter-spacing:.2em;
+    color:var(--coral-2);border:1px solid rgba(255,180,107,.5);
+    border-radius:999px;padding:.25em .9em;opacity:0;transition:opacity .4s;
+  }
+  .signal-card.active .badge{opacity:1}
+
+  /* 月相转盘 */
+  .moon-dial{
+    width:120px;height:120px;margin:1rem auto .4rem;position:relative;
+    border-radius:50%;border:1px dashed rgba(143,180,201,.4);
+    touch-action:none;cursor:grab;
+  }
+  .moon-dial:active{cursor:grabbing}
+  .moon-dial .phase-moon{
+    position:absolute;top:50%;left:50%;width:64px;height:64px;
+    transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle at 40% 35%,#fffdf4,var(--moon) 65%,#cbbc97);
+    overflow:hidden;
+  }
+  .phase-shadow{
+    position:absolute;top:0;left:0;width:64px;height:64px;border-radius:50%;
+    background:#101d29;transform:translateX(0);
+  }
+  .moon-dial .knob{
+    position:absolute;top:50%;left:50%;width:20px;height:20px;border-radius:50%;
+    background:var(--coral-2);box-shadow:0 0 12px rgba(255,180,107,.8);
+    transform:translate(-50%,-50%);pointer-events:none;
+  }
+  .phase-label{font-size:.78rem;color:var(--ink-dim);min-height:1.4em}
+  .phase-label b{color:var(--moon)}
+
+  .unlock-bar{
+    margin-top:2.2rem;text-align:center;opacity:0;transform:translateY(14px);
+    transition:opacity .6s,transform .6s;pointer-events:none;
+  }
+  .unlock-bar.show{opacity:1;transform:none;pointer-events:auto}
+  .unlock-bar button{
+    background:linear-gradient(120deg,var(--coral),var(--coral-2));
+    border:none;color:#1c0d08;font-weight:800;font-size:1rem;
+    padding:.95em 2.4em;border-radius:999px;cursor:pointer;letter-spacing:.12em;
+    box-shadow:0 10px 34px rgba(255,139,126,.35);
+    transition:transform .25s;
+  }
+  .unlock-bar button:hover{transform:scale(1.05)}
+  .countdown{
+    position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+    background:rgba(2,13,24,.82);z-index:5;font-size:clamp(4rem,14vw,9rem);
+    font-weight:800;color:var(--egg-pink);
+    text-shadow:0 0 50px rgba(255,201,221,.5);
+  }
+  .countdown.on{display:flex}
+  #s3.unleashed .signals{opacity:.25;pointer-events:none;transition:opacity .6s}
+
+  /* ===== 第4屏 产卵粒子 ===== */
+  #s4{padding:0;min-height:100vh}
+  #spawnCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+  #s4 .overlay{
+    position:absolute;top:10vh;left:0;right:0;z-index:2;pointer-events:none;
+    text-align:center;padding:0 6vw;
+  }
+  #s4 .overlay .kicker,#s4 .overlay h2,#s4 .overlay .sub{
+    text-shadow:0 2px 20px rgba(2,13,24,.9);
+  }
+  #s4 .tip{
+    position:absolute;bottom:120px;left:0;right:0;text-align:center;z-index:2;
+    color:var(--ink-dim);font-size:.82rem;letter-spacing:.25em;pointer-events:none;
+  }
+  .corals{
+    position:absolute;bottom:0;left:0;right:0;height:150px;z-index:1;pointer-events:none;
+  }
+  .corals svg{position:absolute;bottom:0}
+  .spawn-count{
+    position:absolute;top:26vh;right:6vw;z-index:2;pointer-events:none;
+    font-variant-numeric:tabular-nums;color:var(--egg-pink);
+    font-size:.9rem;letter-spacing:.1em;opacity:.85;text-align:right;
+  }
+
+  /* ===== 第5屏 生存实验 ===== */
+  .tank{
+    position:relative;width:min(820px,92vw);height:min(46vh,380px);
+    margin-top:2rem;border-radius:20px;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 120%,rgba(61,218,215,.08),transparent 60%),rgba(4,24,43,.6);
+    border:1px solid var(--card-border);
+  }
+  .egg-dot{
+    position:absolute;width:5px;height:5px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff,#ffd3e3 60%,#f7a8c4);
+    box-shadow:0 0 5px rgba(255,201,221,.8);
+    transition:transform .45s ease,opacity .45s ease;
+  }
+  .egg-dot.eaten{transform:scale(0) rotate(90deg);opacity:0}
+  .egg-dot.survivor{
+    background:radial-gradient(circle at 35% 30%,#fff8d8,#ffe9a8 60%,#ffd46b);
+    box-shadow:0 0 14px rgba(255,228,150,.95);
+    animation:pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+  .predator-btn{
+    margin-top:1.8rem;background:transparent;color:var(--coral);
+    border:1px solid rgba(255,139,126,.55);border-radius:999px;
+    padding:.8em 2em;font-size:.95rem;cursor:pointer;letter-spacing:.15em;
+    transition:all .3s;font-family:inherit;
+  }
+  .predator-btn:hover:not(:disabled){background:rgba(255,139,126,.12);box-shadow:0 0 24px rgba(255,139,126,.2)}
+  .predator-btn:disabled{opacity:.35;cursor:default}
+  .verdict{
+    margin-top:1.4rem;min-height:3.2em;font-size:1rem;color:var(--ink);
+    text-align:center;max-width:620px;opacity:0;transition:opacity .8s;
+  }
+  .verdict.show{opacity:1}
+  .verdict .num{font-size:1.5em;font-weight:800;color:var(--coral-2)}
+
+  /* ===== 第6屏 幼虫漂流 ===== */
+  .drift-box{
+    width:min(860px,92vw);margin-top:2rem;position:relative;
+  }
+  .drift-box svg{width:100%;height:auto;display:block}
+  .drift-larva{
+    offset-rotate:0deg;
+  }
+  .drift-box.play .drift-larva{
+    offset-path:path("M 40 120 C 180 40, 320 190, 470 110 S 720 60, 812 150");
+    animation:drift 9s cubic-bezier(.45,.05,.55,.95) forwards;
+  }
+  @keyframes drift{
+    0%{offset-distance:0%}
+    88%{offset-distance:97%;opacity:1}
+    100%{offset-distance:100%;opacity:1}
+  }
+  .sprout{opacity:0;transition:opacity 1s .5s}
+  .drift-box.play .sprout{opacity:1;transform-origin:center;animation:sprout 1.6s 8.6s ease both}
+  @keyframes sprout{0%{transform:scale(0)}100%{transform:scale(1)}}
+  .stage-labels{display:flex;justify-content:space-between;margin-top:1rem;color:var(--ink-dim);font-size:.82rem;flex-wrap:wrap;gap:.4em}
+  .stage-labels span b{color:var(--algae)}
+
+  /* ===== 第7屏 结尾 ===== */
+  #s7{text-align:center}
+  #finaleCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  #s7 .content{position:relative;z-index:2;pointer-events:none}
+  #s7 .content > *{pointer-events:auto}
+  .sow-btn{
+    margin-top:2rem;background:linear-gradient(120deg,#ff9db4,var(--egg-pink));
+    border:none;color:#3a1220;font-weight:800;font-size:1.05rem;
+    padding:1em 2.6em;border-radius:999px;cursor:pointer;letter-spacing:.15em;
+    box-shadow:0 12px 44px rgba(255,201,221,.35);transition:transform .25s;font-family:inherit;
+  }
+  .sow-btn:hover{transform:scale(1.06)}
+  .guard{
+    margin-top:2.4rem;color:var(--ink-dim);font-size:.9rem;max-width:600px;margin-left:auto;margin-right:auto;
+  }
+  .guard b{color:var(--algae)}
+  .credits{margin-top:4rem;font-size:.75rem;color:rgba(143,180,201,.55);letter-spacing:.2em}
+
+  @media (max-width:720px){
+    .signals{grid-template-columns:1fr;gap:.9rem}
+    .signal-card{padding:1.1rem 1rem;display:flex;align-items:center;text-align:left;gap:1rem}
+    .signal-card .icon{margin-bottom:0;font-size:1.8rem}
+    .signal-card div{flex:1}
+    .signal-card p{min-height:0}
+    .moon-dial{transform:scale(.85);margin:.4rem auto 0}
+    .scene-wrap{aspect-ratio:16/11}
+    #s1{padding-top:20vh}
+  }
+</style>
+</head>
+<body data-page-node-id="jJKgoAuT5HMLRGUWruxgNZ">
+<canvas id="plankton" data-page-node-id="grTaIfFQBudshwdKaK097j"></canvas>
+
+<main data-page-node-id="x2HA1W0TAjF2QHjF68QDC3">
+
+  <!-- ===== 第1屏 · 开场 ===== -->
+  <section class="screen" id="s1" data-page-node-id="t9ZxU0KQqSDD9TEg3mFxnS">
+    <div class="moonlight" data-page-node-id="Gr4PM3EUz5puZ9hGUiZro4"></div>
+    <div class="moon" data-page-node-id="PzuF2t26HI5REgSgGHrLeg"></div>
+    <p class="kicker" data-page-node-id="YxhacX6Bka7wUrWKn4yZh4">CORAL SPAWNING NIGHT · 一年只有几晚的奇观</p>
+    <h1 data-page-node-id="hzu0VTs3wdWviNkaAuMEbF">满月之夜<br data-page-node-id="5D4A4u0ibPYPA90XcahoNc">海底下雪</h1>
+    <p class="sub" data-page-node-id="IuMecU53TB7zQqT3AbfLuo">珊瑚礁看似沉寂的夜晚，其实正在酝酿一场<b class="pink" data-page-node-id="4jxK4JOJyjumHHFF7dqqsB">亿万物种同时出发</b>的生命仪式——</p>
+    <div class="fact-chip reveal" data-page-node-id="fMOrakwkhmPbLoFTnybUyY">很多人以为珊瑚是石头或植物，其实它是<b data-page-node-id="DNMyxzZaomrq8Z5qwGTy09">动物</b>，而且，它会"生小孩"。</div>
+    <div class="scroll-hint" data-page-node-id="flILxFMiSzHpRYbSCdKjk9">往下滑 · 潜入今夜 ↓</div>
+  </section>
+
+  <!-- ===== 第2屏 · 昼夜 ===== -->
+  <section class="screen" id="s2" data-page-node-id="rXdeIHNWFZEJk67ui5lySw">
+    <p class="kicker reveal" data-page-node-id="4JN5HgdxhMZ3mZkijYxpoV">第一幕 · 礁的另一面</p>
+    <h2 class="reveal" data-page-node-id="FBKrUEshDeCizb29BIULzd">白天它像花园，<br data-page-node-id="P0I1HwTMPDp4gHVGZohgJ8">夜里它在等信号</h2>
+    <div class="scene-wrap reveal" data-page-node-id="Ena4Imt07465DCUVT2CFhF">
+      <div class="scene" id="dayScene" data-page-node-id="I34L23Q3Pmnw1rdMipNLNN">
+        <svg viewBox="0 0 800 425" preserveAspectRatio="xMidYMax slice" data-page-node-id="SnBHND12kg49EWjAGDULcg">
+          <defs data-page-node-id="mG1owQEoZvv5u117IEArAK">
+            <linearGradient id="dayWater" x1="0" y1="0" x2="0" y2="1" data-page-node-id="QnSEiHaGwmhJrB0Olxxfc8">
+              <stop offset="0" stop-color="#7fd4f0" data-page-node-id="rbaEfHpGg8tFmxDuY47Ucl"/><stop offset="1" stop-color="#1b7fae" data-page-node-id="60mJWWoqSGeihWHdLflZ6Z"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="425" fill="url(#dayWater)" data-page-node-id="HHAsqbJeCaOcasoHaF9b80"/>
+          <ellipse cx="150" cy="415" rx="200" ry="46" fill="#e8d9a8" opacity=".8" data-page-node-id="GjJUPM9xTlQnekkPgefAKL"/>
+          <ellipse cx="620" cy="420" rx="260" ry="52" fill="#dcc98f" opacity=".8" data-page-node-id="SRWOAdCmWqoIKz9vAgq6dA"/>
+          <g data-page-node-id="W04SsR2iqZQdnuEZMevH9L">
+            <path d="M120 400 q-6-70 10-96 q10-18 26-6 q-4 44 4 100 z" fill="#ff8b7e" data-page-node-id="qYYVqz6vQqkZNHHLHzxyeB"/>
+            <path d="M158 402 q10-58-2-84 q-8-16-22-8 q6 40 2 92 z" fill="#ffb46b" data-page-node-id="ECF9EJqPDk0Pm1FiCh0ifa"/>
+            <circle cx="132" cy="306" r="9" fill="#ffd9a8" data-page-node-id="yCRFJlfEDpOWeEPutAobeT"/><circle cx="146" cy="322" r="7" fill="#ffd9a8" data-page-node-id="S1yczkAyoMNnO6TyaO3ShF"/>
+          </g>
+          <g data-page-node-id="SxDsxQiER2xI3zBJOjhQSE">
+            <path d="M560 405 q-14-60 6-90 q16-24 34-4 q-8 46 6 96 z" fill="#c17bd6" data-page-node-id="zJZlrsCCTlXSTgDnQjB1OP"/>
+            <path d="M606 408 q6-44 22-60 q14-14 20 4 q-10 30 -4 58 z" fill="#8f6fd8" data-page-node-id="ULZ4HTOE4cuQyb5o4hMhNw"/>
+          </g>
+          <g data-page-node-id="pqTm2eX5EhyRdDeMkKcUnC">
+            <path d="M380 412 q-4-40 8-58 q10-14 20-2 q-4 28 2 60 z" fill="#3ddad7" data-page-node-id="R6V14mGAtRl3v0EwPbf8A7"/>
+            <path d="M412 414 q8-34 20-44 q12-8 14 6 q-8 20-6 40 z" fill="#2bb3b0" data-page-node-id="dqusArpJnwliAvM6anZ3UH"/>
+          </g>
+          <g fill="#ffffff" opacity=".85" data-page-node-id="CtsqsI9LWnwhYD2qS8Fhsa">
+            <ellipse cx="250" cy="150" rx="14" ry="7" data-page-node-id="s7hfhtusQd6PRkS30BkaoW"/><ellipse cx="280" cy="140" rx="12" ry="6" data-page-node-id="27pDLBId8J4QUbv8h1Uu58"/>
+            <ellipse cx="265" cy="158" rx="10" ry="5" data-page-node-id="XLQDxmJdlNAvVtVzssUcQZ"/><path d="M292 141 l12-5 -3 10z" data-page-node-id="I6WtTVL2TOcEcHg4V0gVrK"/>
+          </g>
+          <g fill="#ffe9a8" opacity=".9" data-page-node-id="3Jh7DHBauYBWvXSF3yUj7Z">
+            <ellipse cx="660" cy="180" rx="16" ry="8" data-page-node-id="aKlgCV1mp2lYSAB2oDLHrN"/><ellipse cx="695" cy="168" rx="12" ry="6" data-page-node-id="lZHWvKiX11biAPl6H1AWR0"/>
+            <path d="M710 172 l14-6 -4 11z" data-page-node-id="zVWLVs7iog0ku0r1Pea1oa"/>
+          </g>
+        </svg>
+      </div>
+      <div class="scene" id="nightScene" data-page-node-id="NHZJwiXWMVGSGf4gFTMsIv">
+        <svg viewBox="0 0 800 425" preserveAspectRatio="xMidYMax slice" data-page-node-id="M0DOW7ofw1AKcqF8F2TuUZ">
+          <defs data-page-node-id="HKFGbtFMkyRjyt4XH64YWy">
+            <linearGradient id="nightWater" x1="0" y1="0" x2="0" y2="1" data-page-node-id="pQwFKPQc21paFEXvcYEyDK">
+              <stop offset="0" stop-color="#04182b" data-page-node-id="6ON1JRcPHKsOOq1IC4HAle"/><stop offset="1" stop-color="#062a45" data-page-node-id="dCqXegsrayipe6DhuSAy9f"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="425" fill="url(#nightWater)" data-page-node-id="Bjh7rA8KHkfE9kOIhNg6sH"/>
+          <circle cx="640" cy="80" r="34" fill="#f4ecd8" opacity=".92" data-page-node-id="MFX5cVKvzqjAfharJG8J8F"/>
+          <circle cx="640" cy="80" r="52" fill="#f4ecd8" opacity=".12" data-page-node-id="x1y4VrTftmsrtyPGoOKtst"/>
+          <ellipse cx="150" cy="415" rx="200" ry="46" fill="#0a2233" data-page-node-id="Hd8dG8xCwTDvcLZOfdWhe7"/>
+          <ellipse cx="620" cy="420" rx="260" ry="52" fill="#0a2233" data-page-node-id="OUqf3jlCfiBGxErEtRYSJr"/>
+          <g data-page-node-id="CWS4HIniGMpaRSJktD5pCM">
+            <path d="M120 400 q-6-70 10-96 q10-18 26-6 q-4 44 4 100 z" fill="#123a52" data-page-node-id="Xy6Jaz7pu5n3XMPxUYHvpS"/>
+            <path d="M158 402 q10-58-2-84 q-8-16-22-8 q6 40 2 92 z" fill="#103449" data-page-node-id="mPZ9d1DHVlOy4asuUQXQTW"/>
+          </g>
+          <g data-page-node-id="qfCUxBvLmRSC7mCUVlEnYd">
+            <path d="M560 405 q-14-60 6-90 q16-24 34-4 q-8 46 6 96 z" fill="#123a52" data-page-node-id="3Eg6MBWkH6FApSTlm12vba"/>
+            <path d="M606 408 q6-44 22-60 q14-14 20 4 q-10 30 -4 58 z" fill="#103449" data-page-node-id="IROs53W33tcwKKHgQfVONw"/>
+          </g>
+          <g fill="#9fe8ff" opacity=".5" data-page-node-id="ZHNN4bs9p5NdLcS9iHMx8Q">
+            <circle cx="240" cy="210" r="2.4" data-page-node-id="TuPeDBhwMMaguknNVDL64S"/><circle cx="330" cy="150" r="1.8" data-page-node-id="ykBQ6Gv2AoCs9XnffAFAWt"/>
+            <circle cx="480" cy="250" r="2.2" data-page-node-id="v1HLwF5V0nDJ2mJNqPZMpe"/><circle cx="530" cy="140" r="1.6" data-page-node-id="3ovFwdfafudyKMd41E7nNJ"/>
+            <circle cx="180" cy="280" r="1.8" data-page-node-id="MClzM2AkCePAHPqT2Qpl5C"/><circle cx="700" cy="220" r="2" data-page-node-id="ulkD4raxMNWEdkDjsECndo"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="day-night-ctrl reveal" data-page-node-id="JFF750aWXA944H8SXi5S9i">
+      <span data-page-node-id="YXviLR6ZFbeGdAf2ekxIvg">☀️ 白天</span>
+      <input type="range" id="dayNightSlider" min="0" max="100" value="0" aria-label="昼夜切换" data-page-node-id="BFVaD8E1qpOCw9ZTOIBHhH">
+      <span data-page-node-id="MOUUYIGRMEgLN7amZZMkvG">🌙 夜晚</span>
+    </div>
+    <p class="caption reveal" data-page-node-id="usDXKSj5thH2b5aLNnJxgb">拖动滑杆试试。夜幕降临后，成千上万只珊瑚虫正从各自的珊瑚巢里探出头——它们都在等<b class="highlight" data-page-node-id="raCCsXYYxuLCEnPGfztTO9">同一个月亮的信号</b>。</p>
+  </section>
+
+  <!-- ===== 第3屏 · 三大信号 ===== -->
+  <section class="screen" id="s3" data-page-node-id="KmK09wUmMCVWds8C0aJWy6">
+    <p class="kicker reveal" data-page-node-id="3ibWgxEDOoPx7OVgGlFh9u">第二幕 · 大自然的密码</p>
+    <h2 class="reveal" data-page-node-id="CFa1mOF0J8RKMXW4LFvC5m">集齐三个信号<br data-page-node-id="6sk0ReVqh1ElAvxgyvJiqr">产卵时刻才会开启</h2>
+    <p class="sub reveal" data-page-node-id="F6f4cIJWaZkXXnFjDTNGfm">同一片礁区的珊瑚不需要商量，它们各自读懂自然，却在同一个夜晚行动。<b class="highlight" data-page-node-id="wawBWAdmDoTaxbMkD4KVg5">点击卡片，收集信号</b>。</p>
+    <div class="signals reveal" data-page-node-id="RzeBMeo9cjgxEMOCvQDrf0">
+      <div class="signal-card" id="sig1" role="button" tabindex="0" data-page-node-id="VfZPiWywualKiFzup7ej3i">
+        <span class="icon" data-page-node-id="kHdxJEorlDvh4aYZZOv5O4">🌡️</span>
+        <div data-page-node-id="EhQEbQlkCRtpUxjIuFJuE7">
+          <h3 data-page-node-id="wqJpy7cJZw4PRiXdskLG2w">信号一 · 水温回升</h3>
+          <p data-page-node-id="E2IP6KaAvjSyww2cd6Ge60">点击查看</p>
+          <span class="badge" data-page-node-id="8uxOjYejotgrz9y6runqvX">已收集</span>
+        </div>
+      </div>
+      <div class="signal-card" id="sig2" role="button" tabindex="0" data-page-node-id="be6kI2ECAdC8yKmLaLlj6x">
+        <span class="icon" data-page-node-id="VZFD4Qj72qrUhaku582QSk">🌅</span>
+        <div data-page-node-id="rkNutCqLHFcQCRX6F87IcC">
+          <h3 data-page-node-id="2ssq9KveMIuECueFnYpo2Z">信号二 · 日落之后</h3>
+          <p data-page-node-id="Br8M29fRwNQCFwlGjjwxec">点击查看</p>
+          <span class="badge" data-page-node-id="CSNpWAxt5V5Y3I8pXA7ZRi">已收集</span>
+        </div>
+      </div>
+      <div class="signal-card" id="sig3" role="button" tabindex="0" data-page-node-id="phnAm1asg3A4G8HvQ0gQRQ">
+        <span class="icon" data-page-node-id="zSGDAHhab1MwHEdP6oGRWJ">🌕</span>
+        <div data-page-node-id="lxjRAuOqtHOFtY0Dq88dBy">
+          <h3 data-page-node-id="XkGDiWS3LTOkuwmxrF0PPv">信号三 · 月相圆满</h3>
+          <div class="moon-dial" id="moonDial" data-page-node-id="sqRqHd9eNxSudz3j7Qy55p">
+            <div class="phase-moon" data-page-node-id="UnN8g0uRZuZzoJLYUAuRxh"><div class="phase-shadow" id="phaseShadow" data-page-node-id="g4kQ6DWe4QnMBVbilbiN9O"></div></div>
+            <div class="knob" id="phaseKnob" data-page-node-id="MwNHbHQXyehcr758aHo04J"></div>
+          </div>
+          <div class="phase-label" id="phaseLabel" data-page-node-id="XSpdqjYhjENX1jxo6Dk1ld">拖动转盘，把月亮转到<b data-page-node-id="lFCaFNQHWB7dXhvxowiLfe">满月</b></div>
+          <span class="badge" id="moonBadge" data-page-node-id="SJZfwue1gM0ba1SwWqtNp8">已收集</span>
+        </div>
+      </div>
+    </div>
+    <div class="unlock-bar" id="unlockBar" data-page-node-id="8F8Dou7U7uA53KqKSw8oUX">
+      <button id="unlockBtn" data-page-node-id="NEYFnJrEC8xuofkdhq5Qeb">✦ 见证产卵时刻</button>
+    </div>
+    <div class="countdown" id="countdown" data-page-node-id="VqWSAMsXgj0AFMUpp38TFd">3</div>
+    <div class="scroll-hint" id="s3hint" data-page-node-id="7x0b1MQp5E1gtkkwMjnSKt">信号收集完成后 ↓</div>
+  </section>
+
+  <!-- ===== 第4屏 · 产卵时刻 ===== -->
+  <section class="screen" id="s4" data-page-node-id="OaO6pJFiPL4vhB040onyfW">
+    <canvas id="spawnCanvas" data-page-node-id="YNSWDNfXPnPvZNOFdblIeZ"></canvas>
+    <div class="overlay" data-page-node-id="kjwk9BsqsD5EciIJD0KPVB">
+      <p class="kicker" data-page-node-id="sjsyBNhARvhRssuVRTJ7aR">第三幕 · 倒放的大雪</p>
+      <h2 data-page-node-id="T9DCCwRLqNHd4qTDlXQZrL">产卵开始了</h2>
+      <p class="sub" data-page-node-id="TaTgLOpyV2lMCbuz1H72Eh">亿万颗粉白色的卵束，从珊瑚丛中同时喷出、缓缓上浮——<b class="pink" data-page-node-id="F4yDjbbgRnJXzFF6J0C7Hf">整片礁在下雪，只是方向相反</b>。</p>
+    </div>
+    <div class="spawn-count" id="spawnCount" data-page-node-id="jJwIIekTjh2gyTSCDJb2Rz"></div>
+    <div class="tip" data-page-node-id="3RHJ1lqH7In1GbBEnJaCzM">点击海面任意位置，珊瑚会朝那里再喷发一波</div>
+    <div class="corals" id="coralField" data-page-node-id="poydbJuljF0jppJxEnCi7T">
+      <svg viewBox="0 0 1200 150" width="100%" height="150" preserveAspectRatio="xMidYMax slice" data-page-node-id="sim1Qyi40TJermw4qTHm97">
+        <rect y="128" width="1200" height="22" fill="#0a2233" data-page-node-id="rSEvUoy7o1AoNWgfkZPwXh"/>
+        <g fill="#123a52" data-page-node-id="m8KWFZi3BSCWe8SE1daWfm">
+          <path d="M90 130 q-8-64 12-88 q10-14 22-4 q-6 42 6 92 z" data-page-node-id="ruTFNXwnXfA92WYfHBnvLI"/>
+          <path d="M124 132 q8-50-2-74 q-8-14-18-6 q6 34 2 80 z" data-page-node-id="A0qKEtvgArITrl2UHYYgsm"/>
+          <path d="M300 134 q-12-52 8-80 q14-20 30-2 q-8 40 8 82 z" data-page-node-id="GrxQ8RZwbQeeVinQyICWbe"/>
+          <path d="M338 136 q6-38 18-52 q12-12 16 4 q-8 26-4 48 z" data-page-node-id="MJqCCGDkeEHppLLdFAqqPr"/>
+          <path d="M560 132 q-6-70 14-92 q12-16 24-4 q-6 46 8 96 z" data-page-node-id="FuCWJ1QGOOEpBg5Yc5FfJs"/>
+          <path d="M598 134 q10-44-4-66 q-10-14-18-4 q8 32 4 70 z" data-page-node-id="luipNbRyUe87dpFv76BLBI"/>
+          <path d="M850 136 q-14-48 10-76 q14-18 28 0 q-8 38 6 76 z" data-page-node-id="mwZOxnthqVCic3Y8XmkLLl"/>
+          <path d="M990 132 q-6-58 12-78 q10-12 20-2 q-4 38 6 80 z" data-page-node-id="UikG0o5vf43Y5t3EJleA62"/>
+          <path d="M1024 134 q8-40-2-60 q-8-12-16-4 q6 28 2 64 z" data-page-node-id="M4mGxRIwqtKW6zkFUMxaz0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="scroll-hint" style="z-index:2" data-page-node-id="pQ9cW6SkGoewzOaw7f1k3S">大多数卵，活不下来 ↓</div>
+  </section>
+
+  <!-- ===== 第5屏 · 生存实验 ===== -->
+  <section class="screen" id="s5" data-page-node-id="IXTIdmrEb0Tizf0c0fddFl">
+    <p class="kicker reveal" data-page-node-id="rYUUM8do8FWNiDC7ZTEdJO">第四幕 · 残酷的概率</p>
+    <h2 class="reveal" data-page-node-id="68g655A0uxAUJko7koblAO">一百万颗卵，<br data-page-node-id="iMhDDzsqLvDheWVzl2wy06">能长大的不到 10 颗</h2>
+    <p class="sub reveal" data-page-node-id="DABh4ffX3deRMhEaxLDYw4">屏上的每一颗光点，都代表一批卵。它们要躲过滤食的鱼、漂浮的浪、找不到的另一半——<b class="highlight" data-page-node-id="6c4N86c3yrqEA7KUNrruJ7">点击按钮，让天敌登场</b>。</p>
+    <div class="tank reveal" id="tank" data-page-node-id="Oi1EpRT8ooJF7VdAqbgshd"></div>
+    <button class="predator-btn reveal" id="predatorBtn" data-page-node-id="YTgJFhu2kFofoKh8Hjq2NI">🦐 天敌来了</button>
+    <p class="verdict" id="verdict" data-page-node-id="Te603pHV1vAZ3EnTITH1yV"></p>
+  </section>
+
+  <!-- ===== 第6屏 · 漂流与安家 ===== -->
+  <section class="screen" id="s6" data-page-node-id="gZrnMti9CscrjXX8R3oHB8">
+    <p class="kicker reveal" data-page-node-id="tvgWpkPdlDBM9Hab2kZqdt">第五幕 · 一粒尘埃的旅程</p>
+    <h2 class="reveal" data-page-node-id="JZjgFOpukwvs8mQ6QEvCGb">受精卵 → 幼虫 → 新家</h2>
+    <p class="sub reveal" data-page-node-id="4dVXbPlOhbpylGasSayzNG">那颗幸运的卵在海面受精，变成一只显微级的<b class="highlight" data-page-node-id="xlfwckhlBXi39gReBAz2Yo">浮浪幼虫</b>，随洋流漂流数天到数周。它一旦找到合适的礁石落脚，就永远不再搬家。</p>
+    <div class="drift-box reveal" id="driftBox" data-page-node-id="9kK9VGg6VvJQMLfcYShmcx">
+      <svg viewBox="0 0 860 260" data-page-node-id="SdqS2iOqyWDcyw13KcWaHE">
+        <defs data-page-node-id="ClTdNyIbfRsKa9fTypOrQx">
+          <radialGradient id="larvaGlow" data-page-node-id="0W9OnHBkTK2v8II3vGwGCr"><stop offset="0" stop-color="#fff" data-page-node-id="xXhd3L3dJD8vGH8pNqMVhZ"/><stop offset="1" stop-color="#ffd3e3" stop-opacity="0" data-page-node-id="JlALJgQ42qKiDHviYo9tcg"/></radialGradient>
+        </defs>
+        <path d="M 40 120 C 180 40, 320 190, 470 110 S 720 60, 812 150" fill="none" stroke="rgba(143,180,201,.35)" stroke-width="1.6" stroke-dasharray="3 7" data-page-node-id="dknQqPIaQjRtXqed8NatgI"/>
+        <ellipse cx="812" cy="196" rx="60" ry="14" fill="#0a2233" data-page-node-id="a5MpzS2kkP60ockHJdz0nP"/>
+        <g class="sprout" data-page-node-id="8Bbqbtcy3iAHShUQHBdFU2">
+          <path d="M812 194 q-5-34 6-46 q6-8 12-2 q-3 20 3 48 z" fill="#3ddad7" data-page-node-id="kgkLvCZG5so12YxOdB3Brd"/>
+          <path d="M824 195 q5-24-1-36 q-4-8-10-3 q3 16 1 39 z" fill="#2bb3b0" data-page-node-id="2DQLE1NWyjhqyz6Vu8kpyp"/>
+          <circle cx="816" cy="156" r="3.2" fill="#9ffff5" data-page-node-id="RtRmYfE5lm0He9ekEdiIGD"/>
+        </g>
+        <g class="drift-larva" style="offset-path:path('M 40 120 C 180 40, 320 190, 470 110 S 720 60, 812 150');offset-distance:0%" data-page-node-id="B785xuZbWTK28xvX1AKp14">
+          <circle r="14" fill="url(#larvaGlow)" opacity=".8" data-page-node-id="zX2NpuBJEwmimWM6M6w2o2"/>
+          <circle r="4.6" fill="#ffd3e3" data-page-node-id="LIJqcw3hOVCFYikNrpldHS"/>
+          <circle cx="-1.6" cy="-1" r="1.6" fill="#fff" data-page-node-id="Qu9A3HFK7zSaHUCU3RIHGd"/>
+        </g>
+      </svg>
+    </div>
+    <div class="stage-labels reveal" data-page-node-id="kdqz2oNFHUhIf1GACUN9mK">
+      <span data-page-node-id="GxrS3kpcpzktVZrqXwEKz5">🥚 满月后数夜 · <b data-page-node-id="BBIo2jheL1HsF0elc4qHp5">产卵受精</b></span>
+      <span data-page-node-id="H6wOYiYDDnQ1bg23edRa9V">🌊 数天~数周 · <b data-page-node-id="rJfIGQapcEZRgTF5g3WLLT">随流漂流</b></span>
+      <span data-page-node-id="rF9csjzWvuXdyMccJWE27z">🪸 落脚之后 · <b data-page-node-id="QJaE1fp6yNGplKbpUZgh0k">终生不再搬家，开始建礁</b></span>
+    </div>
+    <p class="caption reveal" data-page-node-id="RpcHJbYVzIKfAMum1xbNot">落到哪里，新的珊瑚礁就从哪里开始——今天的一块礁石，可能是一百年前某只幼虫的"落地签"。</p>
+  </section>
+
+  <!-- ===== 第7屏 · 结尾 ===== -->
+  <section class="screen" id="s7" data-page-node-id="mVNhd9FifaDds0eZc5OnbK">
+    <canvas id="finaleCanvas" data-page-node-id="gr728tJyiQdub8SE7MmMQJ"></canvas>
+    <div class="content" data-page-node-id="2jTqRsQiVDNiPUaxvgTuwE">
+      <p class="kicker reveal" data-page-node-id="w8l9m9GggBoGY7GJrpPIGP">终幕 · 满月的约定</p>
+      <h2 class="reveal" data-page-node-id="2ld7r4XoAs4WlozgDBVr9l">这场雪，每年只有几个晚上</h2>
+      <p class="sub reveal" data-page-node-id="al5m3o1KUq3XF4dGlZn3Tk">错过，就要再等一年。而海水升温、水质恶化，正在让越来越多的珊瑚<b class="highlight" data-page-node-id="eoSbFiv9yHaW1TrNBPG3c9">错过这场约定</b>——满月照常升起，海里却不再下雪。</p>
+      <button class="sow-btn reveal" id="sowBtn" data-page-node-id="urRTdFchSg6iCnLYehJcAp">✧ 替珊瑚播撒一次卵</button>
+      <p class="guard reveal" data-page-node-id="W9GDpHnBdnohuOmES8AUo0">你能帮上忙的事：选择<b data-page-node-id="G8eXyqJ9EkwHQ3bZd30TAM">珊瑚友好型防晒</b>、减少碳足迹、去海边不踩不摸珊瑚。它们继续下雪，海就继续活着。</p>
+      <p class="credits" data-page-node-id="0BSDCOxaARyQuD9xxO06yB">满月产卵夜 · 一个关于珊瑚的小小交互科普</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  const small = innerWidth < 720;
+  const LOW = coarse || small;               // 低性能模式
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+
+  function fit(cv){
+    const r = cv.getBoundingClientRect();
+    cv.width = Math.max(1, r.width * DPR);
+    cv.height = Math.max(1, r.height * DPR);
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    return {ctx, w:r.width, h:r.height};
+  }
+
+  /* ========== 0. 滚动渐入 ========== */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ========== 1. 背景浮游微粒 ========== */
+  const pk = fit(document.getElementById('plankton'));
+  const motes = Array.from({length: LOW?30:70}, ()=>({
+    x:Math.random()*pk.w, y:Math.random()*pk.h,
+    r:Math.random()*1.6+.4, v:Math.random()*.25+.08, a:Math.random()*.35+.1,
+    sway:Math.random()*Math.PI*2
+  }));
+  let pkOn = true;
+  new IntersectionObserver(es=>{ pkOn = es[0].isIntersecting; },{threshold:0})
+    .observe(document.body);
+  (function pkLoop(){
+    requestAnimationFrame(pkLoop);
+    if(!pkOn) return;
+    const {ctx,w,h} = pk;
+    ctx.clearRect(0,0,w,h);
+    for(const m of motes){
+      m.y -= m.v; m.sway += .01;
+      if(m.y < -4){ m.y = h+4; m.x = Math.random()*w; }
+      ctx.globalAlpha = m.a * (0.7 + 0.3*Math.sin(m.sway*2));
+      ctx.fillStyle = '#9fd8ef';
+      ctx.beginPath(); ctx.arc(m.x + Math.sin(m.sway)*8, m.y, m.r, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  })();
+
+  /* ========== 2. 昼夜滑杆 ========== */
+  const slider = document.getElementById('dayNightSlider');
+  const day = document.getElementById('dayScene'), night = document.getElementById('nightScene');
+  slider.addEventListener('input', ()=>{
+    const t = slider.value / 100;
+    day.style.opacity = 1 - t;
+    night.style.opacity = t;
+  });
+
+  /* ========== 3. 信号卡 ========== */
+  const sig = [document.getElementById('sig1'), document.getElementById('sig2'), document.getElementById('sig3')];
+  const facts = {
+    sig1:'春季海水持续变暖到约 26°C，像按下了集体闹钟的开关。',
+    sig2:'日落后的黑暗能骗过捕食者——它们最活跃的时段刚过，卵更安全。',
+    sig3:'月光周期帮珊瑚对准潮汐：满月后的大潮，能把卵带到更远的礁区。'
+  };
+  const moonOk = {sig1:false, sig2:false, sig3:false};
+  sig.forEach(c=>{
+    c.addEventListener('click', ()=>{
+      if(c.id==='sig3' && !moonOk.sig3) return; // 月相卡必须拖到满月
+      if(c.classList.contains('active')) return;
+      c.classList.add('active');
+      if(c.id !== 'sig3') moonOk[c.id] = true;
+      c.querySelector('p').textContent = facts[c.id];
+      checkUnlock();
+    });
+  });
+
+  /* 月相转盘 */
+  const dial = document.getElementById('moonDial');
+  const shadow = document.getElementById('phaseShadow');
+  const knob = document.getElementById('phaseKnob');
+  const phaseLabel = document.getElementById('phaseLabel');
+  const PHASE_NAMES = ['新月','娥眉月','上弦月','盈凸月','满月','亏凸月','下弦月','残月'];
+  let phaseT = 0; // 0=新月 0.5=满月 1=新月
+  function renderPhase(){
+    // 阴影偏移：新月=0(全遮)，满月=±直径(全亮)
+    const off = Math.sin(phaseT * Math.PI) * 0 ; // placeholder
+    const dx = (phaseT<=.5 ? 1 : -1) * Math.abs(phaseT-.5)*2 * 64 * -1 + (phaseT<.5?0:0);
+    // 直接映射: t=0→0(遮), t=.5→-64(全亮), t=1→0(遮,反向进入)
+    let x;
+    if(phaseT <= .5) x = -phaseT*2*64 + 0;      // 从0到-64: 阴影滑出
+    else x = -(1-phaseT)*2*64 + 0;
+    shadow.style.transform = 'translateX(' + x + 'px)';
+    const ang = phaseT * Math.PI*2;
+    const R = 60;
+    knob.style.left = (50 + Math.cos(ang - Math.PI/2)*R/1.2) + '%';
+    knob.style.top  = (50 + Math.sin(ang - Math.PI/2)*R/1.2) + '%';
+    const near = Math.abs(phaseT-.5) < .04;
+    const idx = Math.round(phaseT*8) % 8;
+    phaseLabel.innerHTML = near
+      ? '🌕 <b>满月！</b>信号已收集'
+      : '当前月相：<b>' + PHASE_NAMES[idx] + '</b>，再找找满月';
+    if(near && !moonOk.sig3){
+      moonOk.sig3 = true;
+      sig[2].classList.add('active');
+      sig[2].querySelector('p').textContent = facts.sig3;
+      checkUnlock();
+    }
+  }
+  renderPhase();
+  let dragging = false;
+  function dialPoint(e){
+    const r = dial.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - (r.left + r.width/2);
+    const dy = p.clientY - (r.top + r.height/2);
+    let a = Math.atan2(dy, dx) + Math.PI/2;      // 顶部=0
+    if(a < 0) a += Math.PI*2;
+    phaseT = a / (Math.PI*2);
+    renderPhase();
+  }
+  dial.addEventListener('pointerdown', e=>{ dragging=true; dial.setPointerCapture(e.pointerId); dialPoint(e); });
+  dial.addEventListener('pointermove', e=>{ if(dragging) dialPoint(e); });
+  dial.addEventListener('pointerup', ()=> dragging=false);
+  dial.addEventListener('pointercancel', ()=> dragging=false);
+
+  /* 解锁 */
+  const unlockBar = document.getElementById('unlockBar');
+  function checkUnlock(){
+    if(moonOk.sig1 && moonOk.sig2 && moonOk.sig3) unlockBar.classList.add('show');
+  }
+
+  const countdownEl = document.getElementById('countdown');
+  document.getElementById('unlockBtn').addEventListener('click', ()=>{
+    unlockBar.classList.remove('show');
+    document.getElementById('s3').classList.add('unleashed');
+    countdownEl.classList.add('on');
+    let n = 3;
+    countdownEl.textContent = n;
+    const timer = setInterval(()=>{
+      n--;
+      if(n > 0){ countdownEl.textContent = n; }
+      else{
+        clearInterval(timer);
+        countdownEl.classList.remove('on');
+        document.getElementById('s4').scrollIntoView({behavior:'smooth'});
+      }
+    }, 800);
+  });
+
+  /* ========== 4. 产卵粒子画布 ========== */
+  const sc = document.getElementById('spawnCanvas');
+  let spawn = fit(sc);
+  const eggs = [];
+  let spawnOn = false, spawned = 0;
+  const EGG_CAP = LOW ? 420 : 1400;
+
+  function emit(x, y, n, spread){
+    for(let i=0; i<n; i++){
+      if(eggs.length >= EGG_CAP) eggs.shift();
+      const ang = -Math.PI/2 + (Math.random()-.5)*spread;
+      const sp = Math.random()*1.6 + .5;
+      eggs.push({
+        x: x + (Math.random()-.5)*70,
+        y: spawn.h - Math.random()*36 - 8,
+        vx: Math.cos(ang)*sp*.4 + (Math.random()-.5)*.3,
+        vy: -Math.abs(Math.sin(ang))*sp - .4,
+        r: Math.random()*2.6 + 1.1,
+        wob: Math.random()*Math.PI*2,
+        life: 1
+      });
+      spawned++;
+    }
+  }
+  function ambientEmit(){
+    const spots = [.08,.18,.26,.4,.47,.56,.62,.75,.84,.93];
+    for(const s of spots){
+      if(Math.random() < .5) emit(spawn.w*s, 0, LOW?1:2, .8);
+    }
+  }
+  sc.addEventListener('pointerdown', e=>{
+    const r = sc.getBoundingClientRect();
+    emit(e.clientX - r.left, 0, LOW?26:70, 1.2);
+  });
+
+  const countEl = document.getElementById('spawnCount');
+  function eggLoop(){
+    requestAnimationFrame(eggLoop);
+    if(!spawnOn) return;
+    const {ctx,w,h} = spawn;
+    if(Math.random() < (LOW? .35 : .75)) ambientEmit();
+    ctx.clearRect(0,0,w,h);
+    for(let i=eggs.length-1; i>=0; i--){
+      const g = eggs[i];
+      g.wob += .04;
+      g.x += g.vx + Math.sin(g.wob)*.35;
+      g.y += g.vy;
+      g.vy *= .995;
+      if(g.y < -12 || g.y < h*.06) g.life -= .02;
+      if(g.life <= 0){ eggs.splice(i,1); continue; }
+      const a = Math.min(1, g.life) * .9;
+      ctx.globalAlpha = a;
+      ctx.fillStyle = '#ffaed2';
+      ctx.beginPath(); ctx.arc(g.x, g.y, g.r, 0, 7); ctx.fill();
+      ctx.globalAlpha = a*.3;
+      ctx.fillStyle = '#ff8fc0';
+      ctx.beginPath(); ctx.arc(g.x, g.y, g.r*2.4, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    countEl.textContent = '本场已释放：' + spawned.toLocaleString() + ' 颗卵';
+  }
+  eggLoop();
+  new IntersectionObserver(es=>{
+    spawnOn = es[0].isIntersecting;
+    if(spawnOn){ spawn = fit(sc); spawned = 0; eggs.length = 0; }
+  },{threshold:.15}).observe(document.getElementById('s4'));
+  addEventListener('resize', ()=>{ spawn = fit(sc); });
+
+  /* ========== 5. 生存实验 ========== */
+  const tank = document.getElementById('tank');
+  const N_EGGS = LOW ? 300 : 680;
+  const dots = [];
+  for(let i=0; i<N_EGGS; i++){
+    const d = document.createElement('span');
+    d.className = 'egg-dot';
+    d.style.left = (4 + Math.random()*90) + '%';
+    d.style.top = (6 + Math.random()*84) + '%';
+    tank.appendChild(d); dots.push(d);
+  }
+  const pBtn = document.getElementById('predatorBtn');
+  const verdict = document.getElementById('verdict');
+  pBtn.addEventListener('click', ()=>{
+    pBtn.disabled = true;
+    pBtn.textContent = '捕食中…';
+    const idx = dots.map((_,i)=>i).sort(()=>Math.random()-.5);
+    const survivors = idx.slice(0, 2);
+    const STEP = 2200 / idx.length;   // 捕食总时长约 2.2 秒
+    idx.slice(2).forEach((d, k)=>{
+      setTimeout(()=> dots[d].classList.add('eaten'), 20 + k*STEP);
+    });
+    setTimeout(()=>{
+      survivors.forEach(d=> dots[d].classList.add('survivor'));
+      verdict.innerHTML = '满屏 ' + N_EGGS + ' 颗光点，最后只剩 <span class="num">2</span> 颗。<br>这正是珊瑚一次释放<b class="highlight">百万级</b>卵的原因——用绝对的数量，换极小的胜率。';
+      verdict.classList.add('show');
+    }, 20 + (idx.length-2)*STEP + 600);
+  });
+
+  /* ========== 6. 幼虫漂流 ========== */
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      document.getElementById('driftBox').classList.add('play');
+    }
+  },{threshold:.5}).observe(document.getElementById('s6'));
+
+  /* ========== 7. 结尾彩蛋 ========== */
+  const fc = document.getElementById('finaleCanvas');
+  let finale = fit(fc);
+  const sparks = [];
+  let finaleOn = false;
+  function burst(x, y, n){
+    for(let i=0; i<n; i++){
+      const ang = Math.random()*Math.PI*2;
+      const sp = Math.random()*3.4 + .6;
+      sparks.push({
+        x, y, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp - 1,
+        r:Math.random()*2.4+1, life:1, hue: Math.random()<.5 ? '255,201,221' : '255,233,168'
+      });
+    }
+  }
+  document.getElementById('sowBtn').addEventListener('click', e=>{
+    const r = fc.getBoundingClientRect();
+    for(let k=0; k<3; k++){
+      setTimeout(()=> burst(r.width*(.3+Math.random()*.4), r.height*(.3+Math.random()*.3), LOW?40:110), k*260);
+    }
+    e.target.textContent = '✧ 满月记得你这次帮忙';
+  });
+  (function finaleLoop(){
+    requestAnimationFrame(finaleLoop);
+    if(!finaleOn) return;
+    const {ctx,w,h} = finale;
+    ctx.clearRect(0,0,w,h);
+    for(let i=sparks.length-1; i>=0; i--){
+      const s = sparks[i];
+      s.x += s.vx; s.y += s.vy; s.vy += .012; s.vx *= .985;
+      s.life -= .011;
+      if(s.life<=0){ sparks.splice(i,1); continue; }
+      ctx.globalAlpha = Math.max(0, s.life);
+      ctx.fillStyle = 'rgba(' + s.hue + ',1)';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  })();
+  new IntersectionObserver(es=>{
+    finaleOn = es[0].isIntersecting;
+    if(finaleOn) finale = fit(fc);
+  },{threshold:.2}).observe(document.getElementById('s7'));
+  addEventListener('resize', ()=>{ finale = fit(fc); });
+})();
+</script>
+</body>
+</html>
